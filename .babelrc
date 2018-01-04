@@ -1,4 +1,13 @@
 {
-  "presets": [ "env" ],
-  "plugins": [ "transform-object-rest-spread" ]
+  "presets": ["env"],
+  "plugins": [
+    [
+      "transform-object-rest-spread",
+      "transform-async-to-module-method",
+      {
+        "module": "bluebird",
+        "method": "coroutine"
+      }
+    ]
+  ]
 }
