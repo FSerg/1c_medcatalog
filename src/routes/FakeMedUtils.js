@@ -71,7 +71,7 @@ const UpdateFakeMeds = async (
   data1 = GetYesterday(),
   data2 = GetYesterday()
 ) => {
-  console.log(`UpdateFakeMeds: ${data1} - ${data2}`);
+  console.log(`Update fake meds: ${data1} - ${data2}`);
   // try get data
   const requestedResult = await GetFakeMeds(data1, data2);
 
