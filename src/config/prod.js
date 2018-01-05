@@ -4,5 +4,5 @@ module.exports = {
   mongoURI: process.env.MONGO_URI,
   urlLetter: process.env.URL_LETTER,
   urlAjax: process.env.URL_AJAX,
-  cronSchedule: process.env.URL_AJAX || '0 1 * * *'
+  cronSchedule: process.env.CRON_SCHEDULE || '0 1 * * *'
 };
