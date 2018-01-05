@@ -35,7 +35,7 @@ const ConvertFakeMeds = data => {
       name: item.col1.label,
       packaging: item.col2.title || item.col2.label,
       series: item.col3.label,
-      producer: item.col4.label,
+      producer: item.col4.title || item.col4.label,
       country: item.col5.label,
       status: item.col6.label,
       type: item.col7.label,
