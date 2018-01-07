@@ -1,4 +1,5 @@
 import axios from 'axios';
+import FormData from 'form-data';
 import dateFormat from 'date-fns/format';
 import startOfYesterday from 'date-fns/start_of_yesterday';
 
@@ -49,16 +50,16 @@ const ConvertFakeMeds = data => {
 
 const GetFakeMeds = async (data1, data2) => {
   let result = { recordsTotal: 0, data: [] };
+
+  const form = new FormData();
+  form.append('length', '10000');
+  form.append('let_from', data1);
+  form.append('let_to', data2);
+
   await axios
-    .get(config.urlAjax, {
-      params: {
-        length: '10000',
-        let_from: data1,
-        let_to: data2
-      }
-    })
+    .post(config.urlAjax, form, { headers: form.getHeaders() })
     .then(response => {
-      console.log('Data about fake meds successfully recieved');
+      console.log('Data about fake meds recieved successfully!');
       result = response.data;
     })
     .catch(error => {
