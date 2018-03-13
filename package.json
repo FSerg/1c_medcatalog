@@ -1,9 +1,12 @@
 {
-  "name": "1c_fakemed",
+  "name": "1c_medcatalog",
   "version": "1.0.0",
   "main": "index.js",
+  "nodemonConfig": {
+    "delay": "2500"
+  },
   "scripts": {
-    "dev": "nodemon --exec babel-node -- ./src/index",
+    "dev": "nodemon --watch src/ --exec babel-node -- ./src/index",
     "build": "babel src --out-dir ./build",
     "start": "node ./build/index"
   },
@@ -27,13 +30,19 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
+    "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.2",
     "date-fns": "^1.29.0",
     "express": "^4.16.2",
     "form-data": "^2.3.1",
+    "jsonwebtoken": "^8.2.0",
+    "jwt-simple": "^0.5.1",
     "mongoose": "^4.13.2",
     "node-cron": "^1.2.1",
     "passport": "^0.4.0",
-    "passport-http-bearer": "^1.0.1"
+    "passport-http-bearer": "^1.0.1",
+    "passport-jwt": "^3.0.1",
+    "passport-local": "^1.0.0",
+    "validator": "^9.4.1"
   }
 }

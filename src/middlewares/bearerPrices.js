@@ -5,10 +5,10 @@ const BearerStrategy = require('passport-http-bearer').Strategy;
 
 passport.use(
   new BearerStrategy((token, cb) => {
-    if (token === config.token) {
+    if (token === config.tokenPrices) {
       return cb(null, true, { result: 'OK!' });
     }
-    return cb(null, false, { result: 'Incorrect fakemeds token!' });
+    return cb(null, false, { result: 'Incorrect prices token!' });
   })
 );
 
