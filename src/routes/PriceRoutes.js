@@ -66,6 +66,7 @@ router.get('/', requireAuth, (req, res) => {
     }
   })
     .limit(config.resultsCounts)
+    .sort({ product: 1 })
     .exec((err, results) => {
       if (err) {
         const errorMessage = 'Error to query prices!';
