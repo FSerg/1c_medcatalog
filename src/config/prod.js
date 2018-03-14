@@ -4,6 +4,7 @@ module.exports = {
   token: process.env.TOKEN,
   tokenPrices: process.env.TOKEN_PRICES,
   mongoURI: process.env.MONGO_URI,
+  resultsCounts: process.env.RESULTS_COUNTS || 20,
   urlLetter: process.env.URL_LETTER,
   urlAjax: process.env.URL_AJAX,
   cronSchedule: process.env.CRON_SCHEDULE || '0 1 * * *'

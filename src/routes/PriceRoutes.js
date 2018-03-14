@@ -1,6 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import bearerPrices from '../middlewares/bearerPrices';
+import config from '../config/config';
 import Price from '../models/Price';
 import utils from './FakeMedUtils';
 
@@ -64,7 +65,7 @@ router.get('/', requireAuth, (req, res) => {
       $regex: new RegExp(req.query.queryString.replace(/\s+/g, '\\s+'), 'gi')
     }
   })
-    .limit(20)
+    .limit(config.resultsCounts)
     .exec((err, results) => {
       if (err) {
         const errorMessage = 'Error to query prices!';
