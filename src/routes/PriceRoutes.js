@@ -71,6 +71,7 @@ router.get('/', requireAuth, (req, res) => {
       if (err) {
         const errorMessage = 'Error to query prices!';
         console.error(errorMessage);
+        console.error(err);
         return res.status(400).send({ result: errorMessage });
       }
       return res.status(200).send({ result: results });
