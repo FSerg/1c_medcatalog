@@ -65,7 +65,7 @@ router.get('/', requireAuth, (req, res) => {
       $regex: new RegExp(req.query.queryString.replace(/\s+/g, '\\s+'), 'gi')
     }
   })
-    .limit(config.resultsCounts)
+    .limit(parseInt(config.resultsCounts, 10))
     .sort({ product: 1 })
     .exec((err, results) => {
       if (err) {
