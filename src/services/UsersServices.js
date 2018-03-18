@@ -3,10 +3,29 @@ import jwt from 'jsonwebtoken';
 import isEmail from 'validator/lib/isEmail';
 import config from '../config/config';
 
-// const tokenForUser = user => {
-//   const timestamp = new Date().getTime();
-//   return jwt.encode({ sub: user.id, iat: timestamp }, config.jwtSecret);
-// };
+import User from '../models/User';
+
+const roleAuthorization = roles => {
+  return (req, res, next) => {
+    const { user } = req;
+
+    User.findById(user._id, (err, foundUser) => {
+      if (err) {
+        res.status(422).json({ result: 'No user found!' });
+        return next(err);
+      }
+
+      if (roles.indexOf(foundUser.role) > -1) {
+        return next();
+      }
+
+      res
+        .status(401)
+        .json({ result: 'You are not authorized to view this content!' });
+      return next('Unauthorized');
+    });
+  };
+};
 
 const generateToken = user => {
   return jwt.sign(user, config.jwtSecret, {
@@ -39,8 +58,8 @@ const validate = data => {
 };
 
 module.exports = {
+  roleAuthorization,
   validate,
-  // tokenForUser
   generateToken,
   setUserInfo
 };

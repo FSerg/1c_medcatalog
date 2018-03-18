@@ -1,8 +1,10 @@
 import express from 'express';
 import passport from 'passport';
 
+import log from '../services/Logging';
 import '../services/PassportServices';
 import {
+  roleAuthorization,
   validate,
   generateToken,
   setUserInfo
@@ -11,40 +13,12 @@ import {
 import User from '../models/User';
 
 const requireAuth = passport.authenticate('jwt', { session: false });
-// const requireSignin = passport.authenticate('local', { session: false });
-// const requireSignin = passport.authenticate('local', (err, user, info) => {
-//   if (err) {
-//     return next(err);
-//   }
-// });
 
 const router = express.Router();
 
-const roleAuthorization = roles => {
-  return (req, res, next) => {
-    const { user } = req;
-
-    User.findById(user._id, (err, foundUser) => {
-      if (err) {
-        res.status(422).json({ result: 'No user found!' });
-        return next(err);
-      }
-
-      if (roles.indexOf(foundUser.role) > -1) {
-        return next();
-      }
-
-      res
-        .status(401)
-        .json({ result: 'You are not authorized to view this content!' });
-      return next('Unauthorized');
-    });
-  };
-};
-
 router.post('/signup', (req, res) => {
-  console.log('POST signup user:');
-  console.log(req.body);
+  log.info('POST signup user:');
+  log.info(req.body);
 
   let error = validate(req.body);
   if (error) {
@@ -53,7 +27,7 @@ router.post('/signup', (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email }, (errFind, existingUser) => {
     if (errFind) {
-      console.error(errFind);
+      log.error(errFind);
       return res.status(400).send({ result: errFind });
     }
     if (existingUser) {
@@ -64,7 +38,7 @@ router.post('/signup', (req, res) => {
     const newUser = new User({ email, password });
     newUser.save(errSave => {
       if (errSave) {
-        console.error(errSave);
+        log.error(errSave);
         return res.status(400).send({ result: errSave });
       }
 
@@ -95,8 +69,8 @@ router.post('/signup', (req, res) => {
 // });
 
 router.post('/login', (req, res, next) => {
-  console.log('POST user login:');
-  console.log(req.body);
+  log.info('POST user login:');
+  log.info(req.body);
 
   return passport.authenticate('local', (err, user) => {
     if (err) {
@@ -116,13 +90,13 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/all', requireAuth, roleAuthorization(['admin']), (req, res) => {
-  console.log('GET all users');
+  log.info('GET all users');
   User.find()
     .select('-password')
     .exec((err, results) => {
       if (err) {
         const errorMessage = 'Error to query all users!';
-        console.error(errorMessage);
+        log.error(errorMessage);
         return res.status(400).send({ result: errorMessage });
       }
       return res.status(200).send({ result: results });
@@ -130,10 +104,67 @@ router.get('/all', requireAuth, roleAuthorization(['admin']), (req, res) => {
 });
 
 router.get('/current', requireAuth, (req, res) => {
-  console.log('GET current user');
+  log.info('GET current user');
   const { user } = req;
   const userInfo = setUserInfo(user);
   return res.status(200).send({ result: userInfo });
+});
+
+router.delete('/', requireAuth, roleAuthorization(['admin']), (req, res) => {
+  log.info('DELETE one user');
+  log.info(req.query);
+
+  if (req.query === undefined) {
+    const errMsg = 'В запросе отсутствует идентификатор пользователя';
+    log.error(errMsg);
+    return res.status(400).send({ result: errMsg });
+  }
+
+  if (!req.query.userId) {
+    const errMsg = 'В параметре запроса не заполнен идентификатор пользователя';
+    log.error(errMsg);
+    return res.status(400).send({ result: errMsg });
+  }
+
+  User.findByIdAndRemove(req.query.userId, err => {
+    if (err) {
+      const errMsg = 'Ошибка при вудалении пользователя из БД';
+      log.error(errMsg);
+      log.error(err);
+      return res.status(400).send({ result: errMsg });
+    }
+    return res.status(200).send({ result: 'success' });
+  });
+});
+
+router.post('/', requireAuth, roleAuthorization(['admin']), (req, res) => {
+  log.info('POST one user');
+  log.info(req.body);
+
+  const userData = req.body;
+
+  User.findOne({ _id: userData._id }, (err, user) => {
+    if (err) {
+      const errMsg = 'Не удалось найти пользователя в БД';
+      log.error(errMsg);
+      log.error(err);
+      return res.status(400).send({ result: errMsg });
+    }
+
+    for (let index in userData) {
+      user[index] = userData[index];
+    }
+
+    user.save(err => {
+      if (err) {
+        const errMsg = 'Ошибка при записи данных о пользователе в БД';
+        log.error(errMsg);
+        log.error(err);
+        return res.status(400).send({ result: errMsg });
+      }
+      return res.status(200).send({ result: 'success' });
+    });
+  });
 });
 
 export default router;

@@ -8,6 +8,8 @@ import config from './config/config';
 import UsersRoutes from './routes/UsersRoutes';
 import FakeMedRoutes from './routes/FakeMedRoutes';
 import PriceRoutes from './routes/PriceRoutes';
+import DrugstoreRoutes from './routes/DrugstoreRoutes';
+
 import FakeMedUtils from './routes/FakeMedUtils';
 
 mongoose.Promise = global.Promise;
@@ -35,6 +37,7 @@ app.use('/api/users', UsersRoutes);
 // other - routes
 app.use('/api/fakemed', FakeMedRoutes);
 app.use('/api/price', PriceRoutes);
+app.use('/api/drugstore', DrugstoreRoutes);
 
 // test route
 app.get('/test', (req, res) => {
