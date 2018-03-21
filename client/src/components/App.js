@@ -13,6 +13,7 @@ import PricePage from './price/PricePage';
 import DrugstoresList from './drugstores/DrugstoresList';
 import UsersList from './users/UsersList';
 import Page from './Page';
+import ModalRootContainer from './modal/ModalRootContainer';
 
 class App extends Component {
   render() {
@@ -29,7 +30,7 @@ class App extends Component {
             webvisor: true
           }}
         />
-
+        <ModalRootContainer />
         <NavigationBar />
 
         <Container style={{ marginTop: '5em' }}>

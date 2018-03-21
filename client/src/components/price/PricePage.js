@@ -24,7 +24,6 @@ class PricePage extends Component {
     } else {
       this.setState({ SearchString });
     }
-    // console.log(this.state.SearchString);
     this.props.findPrices(this.state.SearchString);
   }, 500);
 

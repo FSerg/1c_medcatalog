@@ -12,7 +12,7 @@ const PriceBatches = ({ batches }) => {
   };
 
   const renderBatchInfo = batch => {
-    return `[${batch.batch_id}] ${getValue(batch, 'batch_name', 'Серия')} / 
+    return `[${batch.batch_id}] ${getValue(batch, 'batch_name', 'Серия')} /
     ${getValue(batch, 'producer', 'Производитель')}`;
   };
 
@@ -22,8 +22,10 @@ const PriceBatches = ({ batches }) => {
         {batches.map(batch => (
           <Table.Row key={batch.batch_uid}>
             <Table.Cell>{renderBatchInfo(batch)}</Table.Cell>
-            <Table.Cell textAlign="right">
+            <Table.Cell collapsing textAlign="right">
               <PriceBatchDates size={'large'} batch={batch} />
+            </Table.Cell>
+            <Table.Cell collapsing textAlign="right">
               <Label color="teal" size="large">
                 {batch.price} р
               </Label>

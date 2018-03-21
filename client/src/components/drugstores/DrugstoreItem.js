@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Card, Table, Label, Button } from 'semantic-ui-react';
 
-const DrugstoreItem = ({ item, userRole, delDrugstore }) => {
+import { showModal } from '../../actions/modalActions';
+import { MODAL_TYPE_CONFIRMATION } from '../modal/modalTypes';
+
+const DrugstoreItem = ({ item, userRole, showModal, delDrugstore }) => {
   const { drugstore_uid, drugstore_name, inn, address, phone, email } = item;
 
   const renderInfo = (title, value, color = null, size = 'medium') => {
@@ -21,6 +25,17 @@ const DrugstoreItem = ({ item, userRole, delDrugstore }) => {
     );
   };
 
+  const showConfirm = () => {
+    showModal(MODAL_TYPE_CONFIRMATION, {
+      title: `Удалить аптеку: ${drugstore_name}?`,
+      onConfirm: isConfirmed => {
+        if (isConfirmed) {
+          delDrugstore(drugstore_uid);
+        }
+      }
+    });
+  };
+
   const renderButton = () => {
     if (userRole === 'admin') {
       return (
@@ -28,7 +43,7 @@ const DrugstoreItem = ({ item, userRole, delDrugstore }) => {
           floated="right"
           negative
           size="mini"
-          onClick={() => delDrugstore(drugstore_uid)}
+          onClick={() => showConfirm()}
         >
           Удалить
         </Button>
@@ -60,4 +75,4 @@ const DrugstoreItem = ({ item, userRole, delDrugstore }) => {
   );
 };
 
-export default DrugstoreItem;
+export default connect(null, { showModal })(DrugstoreItem);

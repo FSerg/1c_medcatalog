@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Table, Input, Checkbox, Button } from 'semantic-ui-react';
+
+import { showModal } from '../../actions/modalActions';
+import { MODAL_TYPE_CONFIRMATION } from '../modal/modalTypes';
 
 class UserItem extends Component {
   state = {
@@ -58,6 +62,17 @@ class UserItem extends Component {
     this.props.updateUser(newdata);
   };
 
+  showConfirm = () => {
+    this.props.showModal(MODAL_TYPE_CONFIRMATION, {
+      title: `Удалить пользователя: ${this.state.data.email}?`,
+      onConfirm: isConfirmed => {
+        if (isConfirmed) {
+          this.props.delUser(this.state.data._id);
+        }
+      }
+    });
+  };
+
   render() {
     const { data, errors } = this.state;
 
@@ -110,7 +125,7 @@ class UserItem extends Component {
             size="small"
             negative
             disabled={data.isUpdating}
-            onClick={() => this.props.delUser(data._id)}
+            onClick={() => this.showConfirm()}
           >
             Удалить
           </Button>
@@ -120,4 +135,4 @@ class UserItem extends Component {
   }
 }
 
-export default UserItem;
+export default connect(null, { showModal })(UserItem);
