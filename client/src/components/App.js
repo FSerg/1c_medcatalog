@@ -7,6 +7,8 @@ import PrivateRoute from './authentication/AuthenticatedRoute';
 import LoginPage from './authentication/LoginPage';
 import SignupPage from './authentication/SignupPage';
 
+import Config from './Config';
+
 import NavigationBar from './navbar/NavigationBar';
 import Landing from './Landing';
 import PricePage from './price/PricePage';
@@ -19,9 +21,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        {console.log(parseInt(process.env.REACT_APP_YM_ID, 10))}
+        {console.log(parseInt(Config.YandexID, 10))}
         <YMInitializer
-          accounts={[parseInt(process.env.REACT_APP_YM_ID, 10)]}
+          accounts={[parseInt(Config.YandexID, 10)]}
           version="2"
           options={{
             clickmap: true,
