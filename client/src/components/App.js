@@ -19,6 +19,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        {console.log(parseInt(process.env.REACT_APP_YM_ID, 10))}
         <YMInitializer
           accounts={[parseInt(process.env.REACT_APP_YM_ID, 10)]}
           version="2"

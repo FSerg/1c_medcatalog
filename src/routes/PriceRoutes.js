@@ -4,35 +4,36 @@ import bearerPrices from '../middlewares/bearerPrices';
 import config from '../config/config';
 import Price from '../models/Price';
 import utils from './FakeMedUtils';
+import log from '../services/Logging';
 
 const router = express.Router();
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 router.post('/', bearerPrices, (req, res) => {
-  console.log('Price from 1C:');
+  log.info('POST Price from 1C');
   // console.log(req.body);
 
   const DataArray = req.body;
   // we must get array
   if (!Array.isArray(DataArray)) {
     const errorMessage = 'Price from 1C must be Array!';
-    console.error(errorMessage);
+    log.error(errorMessage);
     return res.status(400).send({ result: errorMessage });
   }
 
   // write array to DB
   Price.insertMany(DataArray, err => {
     if (err) {
-      console.error(err);
+      log.error(err);
       return res.status(400).send({ result: 'error' });
     }
-    console.log('Prices Added!');
+    log.info('Prices Added!');
     return res.status(200).send({ result: 'success' });
   });
 });
 
 router.delete('/', bearerPrices, (req, res) => {
-  console.log('Delete prices from 1C:');
+  log.info('Delete prices from 1C:');
   if (req.query === undefined) {
     return res.status(400).send({
       result: utils.errorMessage(req.query, 'req.query.drugstore_uid')
@@ -44,17 +45,17 @@ router.delete('/', bearerPrices, (req, res) => {
   };
   Price.deleteMany(filter, err => {
     if (err) {
-      console.error(err);
+      log.error(err);
       return res.status(400).send({ result: 'error' });
     }
-    console.log('Prices DELETED!');
+    log.info('Prices DELETED!');
     return res.status(200).send({ result: 'success' });
   });
 });
 
 router.get('/', requireAuth, (req, res) => {
-  console.log('GET prices');
-  console.log(req.query);
+  log.info('GET prices');
+  log.info(req.query);
 
   if (req.query === undefined || req.query.queryString === '') {
     return res.status(400).send({ result: 'Пустая строка запроса' });
@@ -70,8 +71,8 @@ router.get('/', requireAuth, (req, res) => {
     .exec((err, results) => {
       if (err) {
         const errorMessage = 'Error to query prices!';
-        console.error(errorMessage);
-        console.error(err);
+        log.error(errorMessage);
+        log.error(err);
         return res.status(400).send({ result: errorMessage });
       }
       return res.status(200).send({ result: results });

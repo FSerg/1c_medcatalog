@@ -9,7 +9,7 @@
     "arrow-parens": ["error", "as-needed"],
     "function-paren-newline": ["error", "consistent"],
     "arrow-body-style": ["error", "always"],
-    "camelcase": [{"properties": "never"}],
+    # "camelcase": [{"properties": "never"}],
     # "no-console": ["error", { allow: ["warn", "error"] }]
     "react/prefer-stateless-function": [0, { "ignorePureComponents": <ignorePureComponents> }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]

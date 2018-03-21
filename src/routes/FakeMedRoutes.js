@@ -2,12 +2,13 @@ import express from 'express';
 import bearer from '../middlewares/bearer';
 import FakeMed from '../models/FakeMed';
 import utils from './FakeMedUtils';
+import log from '../services/Logging';
 
 const router = express.Router();
 
 router.get('/update', bearer, async (req, res) => {
-  console.log('GET manual update fakemed!');
-  console.log(req.query);
+  log.info('GET manual update fakemed!');
+  log.info(req.query);
 
   if (req.query === undefined) {
     return res.status(400).send({
@@ -30,18 +31,17 @@ router.get('/update', bearer, async (req, res) => {
       req.query.date_begin,
       req.query.date_end
     );
-    // return res.status(200).send({ result: saveResult });
     return res.status(200).send({ result: 'OK' });
   } catch (err) {
     const errorMessage = `Error to update FakeMeds: ${err}`;
-    console.error(errorMessage);
+    log.error(errorMessage);
     return res.status(400).send({ result: errorMessage });
   }
 });
 
 router.get('/', bearer, (req, res) => {
-  console.log('GET list of fakemeds!');
-  console.log(req.query);
+  log.info('GET list of fakemeds!');
+  log.info(req.query);
 
   if (req.query === undefined) {
     return res
@@ -52,6 +52,7 @@ router.get('/', bearer, (req, res) => {
   const { drugstore } = req.query;
   const error1 = utils.checkField(drugstore, 'req.query.drugstore');
   if (error1) {
+    log.error(error1);
     return res.status(400).send({ result: error1 });
   }
 
@@ -61,7 +62,7 @@ router.get('/', bearer, (req, res) => {
     async (err, results) => {
       if (err) {
         const errorMessage = 'Error to query fakemeds!';
-        console.error(errorMessage);
+        log.error(errorMessage);
         return res.status(400).send({ result: errorMessage });
       }
       const updateResults = await FakeMed.update(
