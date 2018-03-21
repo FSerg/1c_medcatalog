@@ -1,25 +1,23 @@
-FROM node:9.3.0-alpine
-
-RUN apk add --no-cache tzdata
+FROM node:9.4
 
 # Commands will run in this directory
-WORKDIR /app
-# Add all our code inside that directory that lives in the container
-ADD . /app
+WORKDIR /usr/src/app
+# Copy source code to image
+COPY . .
 
-# Install dependencies and make builds
+# Install dependencies
 RUN cd client && \
     yarn install && \
-    yarn build && \
     cd .. &&\
     \
-    yarn install && \
-    yarn build
+    yarn install
 
 # ARG NODE_ENV=production
 # ENV NODE_ENV=$NODE_ENV
 # Set environment variables
 ENV NODE_ENV production
 
-# The command to run our app when the container is run
-CMD ["yarn", "start"]
+RUN chmod +x run
+
+# Build app and start server from script
+CMD ["/usr/src/app/run"]
