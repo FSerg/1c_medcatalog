@@ -11,7 +11,7 @@ import PriceRoutes from './routes/PriceRoutes';
 import DrugstoreRoutes from './routes/DrugstoreRoutes';
 
 import FakeMedUtils from './routes/FakeMedUtils';
-import log from '../services/Logging';
+import log from './services/Logging';
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoURI, { useMongoClient: true }, err => {
