@@ -12,11 +12,6 @@ RUN cd client && \
     \
     yarn install
 
-# ARG NODE_ENV=production
-# ENV NODE_ENV=$NODE_ENV
-# Set environment variables
-ENV NODE_ENV production
-
 RUN chmod +x run
 
 # Build app and start server from script
