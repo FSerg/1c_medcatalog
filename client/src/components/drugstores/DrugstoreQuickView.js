@@ -14,40 +14,45 @@ class DrugstoreQuickView extends Component {
 
   componentDidMount() {
     const authData = { authorization: localStorage.getItem('token') };
-    const drugstore_uid = this.props.drugstore_uid;
+    const { drugstore_uid } = this.props;
     axios
-      //.get(this.props.url)
       .get('/api/drugstore', { headers: authData, params: { drugstore_uid } })
       .then(response => {
         this.setState({ drugstore: response.data.result, isLoading: false });
       })
       .catch(error => {
-        console.log(error);
-        this.setState({ error, isLoading: false });
+        let errMsg = 'Не удалось получить информацию по Аптеке из БД';
+        if (error.response) {
+          errMsg = error.response.data.result;
+        }
+        this.setState({ drugstore: null, error: errMsg, isLoading: false });
       });
   }
 
-  render() {
-    return (
-      <div style={{ paddingTop: '1em' }}>
-        {this.state.error ? (
-          <Message negative>
-            <p>{this.state.error}</p>
-          </Message>
-        ) : null}
+  renderQuickView() {
+    if (this.state.error) {
+      return (
+        <Message negative>
+          <p>{this.state.error}</p>
+        </Message>
+      );
+    }
 
-        {this.state.isLoading ? (
-          <Loader
-            active
-            size="small"
-            inline="centered"
-            style={{ marginTop: '1em', marginBottom: '1em' }}
-          />
-        ) : (
-          <DrugstoreItem item={this.state.drugstore} />
-        )}
-      </div>
-    );
+    if (this.state.isLoading) {
+      return (
+        <Loader
+          active
+          size="small"
+          inline="centered"
+          style={{ marginTop: '1em', marginBottom: '1em' }}
+        />
+      );
+    }
+    return <DrugstoreItem item={this.state.drugstore} />;
+  }
+
+  render() {
+    return <div style={{ paddingTop: '1em' }}>{this.renderQuickView()}</div>;
   }
 }
 

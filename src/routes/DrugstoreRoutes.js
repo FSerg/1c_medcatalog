@@ -93,41 +93,16 @@ router.get('/', requireAuth, (req, res) => {
 
   Drugstore.findOne(
     { drugstore_uid: req.query.drugstore_uid },
-    (err, results) => {
+    (err, result) => {
       if (err) {
         const errMsg = 'Ошибка при выполнении запроса поиска аптеки в БД';
         log.error(errMsg);
         log.error(err);
         return res.status(400).send({ result: errMsg });
       }
-      return res.status(200).send({ result: results });
-    }
-  );
-});
-
-router.get('/', requireAuth, (req, res) => {
-  log.info('GET one drugstore');
-  log.info(req.query);
-
-  if (req.query === undefined) {
-    const errMsg = 'В запросе отсутствует идентификатор аптеки';
-    log.error(errMsg);
-    return res.status(400).send({ result: errMsg });
-  }
-
-  if (!req.query.drugstore_uid) {
-    const errMsg = 'В параметре запроса не заполнен идентификатор аптеки';
-    log.error(errMsg);
-    return res.status(400).send({ result: errMsg });
-  }
-
-  Drugstore.findOne(
-    { drugstore_uid: req.query.drugstore_uid },
-    (err, result) => {
-      if (err) {
-        const errMsg = 'Ошибка при поиске аптеки в БД';
+      if (!result) {
+        const errMsg = 'Не удалось найти аптеку в БД';
         log.error(errMsg);
-        log.error(err);
         return res.status(400).send({ result: errMsg });
       }
       return res.status(200).send({ result });

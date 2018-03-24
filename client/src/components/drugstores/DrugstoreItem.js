@@ -5,8 +5,18 @@ import { Card, Table, Label, Button } from 'semantic-ui-react';
 import { showModal } from '../../actions/modalActions';
 import { MODAL_TYPE_CONFIRMATION } from '../modal/modalTypes';
 
+import { getUpdateStr } from '../../utils/Utils';
+
 const DrugstoreItem = ({ item, userRole, showModal, delDrugstore }) => {
-  const { drugstore_uid, drugstore_name, inn, address, phone, email } = item;
+  const {
+    drugstore_uid,
+    drugstore_name,
+    inn,
+    address,
+    phone,
+    email,
+    updatedAt
+  } = item;
 
   const renderInfo = (title, value, color = null, size = 'medium') => {
     return (
@@ -57,7 +67,7 @@ const DrugstoreItem = ({ item, userRole, showModal, delDrugstore }) => {
       <Card.Content>
         <Card.Header>{drugstore_name}</Card.Header>
         <Card.Meta>
-          [ИНН: {inn}] {drugstore_uid}
+          [ИНН: {inn}] {getUpdateStr(updatedAt)}
         </Card.Meta>
         <Card.Description>
           <Table compact="very">

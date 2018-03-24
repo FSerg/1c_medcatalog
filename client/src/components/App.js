@@ -21,7 +21,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        {console.log(parseInt(Config.YandexID, 10))}
         <YMInitializer
           accounts={[parseInt(Config.YandexID, 10)]}
           version="2"

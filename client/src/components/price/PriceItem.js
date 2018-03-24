@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Label, Grid } from 'semantic-ui-react';
 import PriceBatches from './PriceBatches';
 import DrugstoreQuickView from '../drugstores/DrugstoreQuickView';
+import { getUpdateStr } from '../../utils/Utils';
 
 class PriceItem extends Component {
   state = {
@@ -13,24 +14,6 @@ class PriceItem extends Component {
       return `ШК: ${barcodes.join(', ')}`;
     }
     return '';
-  };
-
-  getUpdateStr = d => {
-    if (!d) return '';
-
-    const options = {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: false
-    };
-    const dateStr = new Intl.DateTimeFormat('ru-RU', options).format(
-      new Date(d)
-    );
-    return `Обновлено: ${dateStr}`;
   };
 
   handleShowDrugstore = () => {
@@ -48,9 +31,7 @@ class PriceItem extends Component {
               {drugstore.drugstore_name}
             </a>
           </Grid.Column>
-          <Grid.Column textAlign="right">
-            {this.getUpdateStr(updatedAt)}
-          </Grid.Column>
+          <Grid.Column textAlign="right">{getUpdateStr(updatedAt)}</Grid.Column>
         </Grid.Row>
       </Grid>
     );

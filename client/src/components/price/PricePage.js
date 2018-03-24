@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
 import { Input, Card, Divider, Message, Loader } from 'semantic-ui-react';
+import ym from 'react-yandex-metrika';
 
 import { findPrices } from '../../actions/priceActions';
 import PriceItem from './PriceItem';
@@ -24,6 +25,7 @@ class PricePage extends Component {
     } else {
       this.setState({ SearchString });
     }
+    ym('reachGoal', 'Searching', { searchString: this.state.SearchString });
     this.props.findPrices(this.state.SearchString);
   }, 500);
 
@@ -38,7 +40,7 @@ class PricePage extends Component {
           fluid
           size="massive"
           icon="search"
-          placeholder="Search..."
+          placeholder="Что искать..."
           onChange={this.handleChange}
         />
         <Divider horizontal>Результаты поиска</Divider>
