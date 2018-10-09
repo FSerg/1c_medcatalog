@@ -2,25 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Container, Header, Button } from 'semantic-ui-react';
+import { Container, Grid, Header, Button } from 'semantic-ui-react';
 
 const Landing = ({ isAuthenticated }) => (
   <Container text textAlign="center" style={{ padding: '8em 0em' }}>
     <Header as="h3" style={{ fontSize: '3em' }}>
-      Аптечный прайс
+      Аптеки Альфа
     </Header>
     <p style={{ fontSize: '1.5em', fontWeight: 'normal' }}>
-      Каталог аптечных товаров с ценами и остатками по всей сети
+      Единый прайс сети аптек Альфа
     </p>
-    {isAuthenticated ? (
-      <Button primary size="huge" as={Link} to="/price">
-        Поиск
-      </Button>
-    ) : (
-      <Button primary size="huge" as={Link} to="/login">
-        Войти в систему
-      </Button>
-    )}
+
+    <Grid divided="vertically">
+      <Grid.Row columns={1}>
+        <Grid.Column>
+          <Button primary size="huge" as={Link} to="/price">
+            Поиск по каталогу
+          </Button>
+        </Grid.Column>
+      </Grid.Row>
+
+      <Grid.Row columns={2}>
+        <Grid.Column>
+          <Button size="huge" as={Link} to="/drugstores">
+            Адреса и телефоны
+          </Button>
+        </Grid.Column>
+        <Grid.Column>
+          <Button size="huge" as={Link} to="/discounts">
+            Бонусная программа
+          </Button>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   </Container>
 );
 

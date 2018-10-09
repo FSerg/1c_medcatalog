@@ -4,7 +4,7 @@
   },
   "extends": "airbnb",
   "parser": "babel-eslint",
-  "rules": {
+  "rules": { 
     "comma-dangle": ["error", "never"],
     "arrow-parens": ["error", "as-needed"],
     "function-paren-newline": ["error", "consistent"],

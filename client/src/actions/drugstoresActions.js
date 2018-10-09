@@ -17,9 +17,8 @@ export const drugstoresError = error => {
 export const getDrugstores = () => dispatch => {
   dispatch({ type: DRUGSTORES_GET_STARTED });
 
-  const authData = { authorization: localStorage.getItem('token') };
   axios
-    .get('/api/drugstore/all', { headers: authData })
+    .get('/api/drugstore/all')
     .then(response => {
       return dispatch({
         type: DRUGSTORES_GET_FINISHED,

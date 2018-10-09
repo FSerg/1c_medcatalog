@@ -30,7 +30,7 @@ const PriceBatches = ({ batches }) => {
                 {batch.price} р
               </Label>
               <Label color="blue" size="large">
-                {batch.count} шт
+                {batch.countStr}
               </Label>
             </Table.Cell>
           </Table.Row>

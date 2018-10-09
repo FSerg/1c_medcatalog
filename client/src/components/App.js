@@ -11,6 +11,7 @@ import Config from './Config';
 
 import NavigationBar from './navbar/NavigationBar';
 import Landing from './Landing';
+import Discounts from './discounts/Discounts';
 import PricePage from './price/PricePage';
 import DrugstoresList from './drugstores/DrugstoresList';
 import UsersList from './users/UsersList';
@@ -39,9 +40,10 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route path="/login" component={LoginPage} />
+            <Route path="/discounts" component={Discounts} />
             <Route path="/signup" component={SignupPage} />
-            <PrivateRoute path="/price" component={PricePage} />
-            <PrivateRoute path="/drugstores" component={DrugstoresList} />
+            <Route path="/price" component={PricePage} />
+            <Route path="/drugstores" component={DrugstoresList} />
             <PrivateRoute path="/users" component={UsersList} />
             <Route path="/page" component={Page} />
           </Switch>

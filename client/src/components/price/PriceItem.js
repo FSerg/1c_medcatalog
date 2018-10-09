@@ -44,6 +44,7 @@ class PriceItem extends Component {
       product,
       vital,
       count,
+      countStr,
       drugstore,
       batches,
       barcodes,
@@ -56,7 +57,7 @@ class PriceItem extends Component {
           <Card.Header>
             {product}
             <Label style={{ float: 'right' }} size="big">
-              {count} шт
+              {countStr}
             </Label>
           </Card.Header>
           <Card.Meta>

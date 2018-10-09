@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Container, Menu } from 'semantic-ui-react';
+import { Container, Menu, Label, Button, Icon } from 'semantic-ui-react';
 
 import { signoutUser } from '../../actions/authActions';
 import UserMenu from './UserMenu';
@@ -13,14 +13,38 @@ class NavigationBar extends Component {
     return (
       <Menu fixed="top">
         <Container>
-          <Menu.Item as={NavLink} exact to="/" header>
-            Аптечный прайс
+          <Label
+            as={NavLink}
+            exact
+            to="/"
+            size="big"
+            style={{
+              marginLeft: '10px',
+              marginTop: '10px',
+              marginBottom: '10px'
+            }}
+          >
+            Аптеки Альфа <Icon style={{ paddingLeft: '20px' }} name="phone" />8
+            (86133) 49-333
+          </Label>
+
+          <Menu.Item as={NavLink} to="/price">
+            <Button primary>Поиск по каталогу</Button>
+          </Menu.Item>
+          <Menu.Item as={NavLink} to="/drugstores">
+            Адреса <br />
+            аптек
+          </Menu.Item>
+          <Menu.Item as={NavLink} exact to="/discounts">
+            Бонусная <br />
+            программа
           </Menu.Item>
 
           {!authenticated ? (
             <Menu.Menu position="right">
               <Menu.Item as={NavLink} to="/login">
-                Войти в систему
+                Вход в<br />
+                систему
               </Menu.Item>
               <Menu.Item as={NavLink} to="/signup">
                 Регистрация
@@ -55,5 +79,8 @@ const mapStateToProps = state => {
 };
 
 export default withRouter(
-  connect(mapStateToProps, { signoutUser })(NavigationBar)
+  connect(
+    mapStateToProps,
+    { signoutUser }
+  )(NavigationBar)
 );

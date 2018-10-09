@@ -59,7 +59,7 @@ router.delete('/', requireAuth, roleAuthorization(['admin']), (req, res) => {
   );
 });
 
-router.get('/all', requireAuth, (req, res) => {
+router.get('/all', (req, res) => {
   log.info('GET all drugstores');
 
   Drugstore.find({})
@@ -75,7 +75,7 @@ router.get('/all', requireAuth, (req, res) => {
     });
 });
 
-router.get('/', requireAuth, (req, res) => {
+router.get('/', (req, res) => {
   log.info('GET one drugstore');
   log.info(req.query);
 

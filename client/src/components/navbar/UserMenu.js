@@ -15,15 +15,8 @@ const UserMenu = ({ user, signoutUser }) => {
     return null;
   };
 
-  return [
-    <Menu.Item as={NavLink} to="/price" key={1}>
-      Поиск по каталогу
-    </Menu.Item>,
-    <Menu.Item as={NavLink} to="/drugstores" key={2}>
-      Аптеки
-    </Menu.Item>,
-
-    <Menu.Menu position="right" key={3}>
+  return (
+    <Menu.Menu position="right">
       <Dropdown item simple text={user.email}>
         <Dropdown.Menu>
           {renderAdminMenuItem()}
@@ -34,7 +27,7 @@ const UserMenu = ({ user, signoutUser }) => {
         </Dropdown.Menu>
       </Dropdown>
     </Menu.Menu>
-  ];
+  );
 };
 
 UserMenu.propTypes = {

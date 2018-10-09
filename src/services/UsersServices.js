@@ -4,6 +4,7 @@ import isEmail from 'validator/lib/isEmail';
 import config from '../config/config';
 
 import User from '../models/User';
+import { LOADIPHLPAPI } from 'dns';
 
 const roleAuthorization = roles => {
   return (req, res, next) => {
@@ -25,6 +26,23 @@ const roleAuthorization = roles => {
       return next('Unauthorized');
     });
   };
+};
+
+const getRoleByJwtData = async jwtData => {
+  if (!jwtData._id) {
+    return 'guest';
+  }
+  console.log('user ID: ' + jwtData._id);
+
+  try {
+    const foundUser = await User.findOne({ _id: jwtData._id, isActive: true });
+    console.log('foundUser: ' + foundUser);
+
+    return foundUser.role;
+  } catch (error) {
+    // handleError(res, error.message);
+    return 'guest';
+  }
 };
 
 const generateToken = user => {
@@ -59,6 +77,7 @@ const validate = data => {
 
 module.exports = {
   roleAuthorization,
+  getRoleByJwtData,
   validate,
   generateToken,
   setUserInfo

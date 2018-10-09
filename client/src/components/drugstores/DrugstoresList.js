@@ -11,6 +11,13 @@ class DrugstoresList extends Component {
     this.props.getDrugstores();
   }
 
+  getUserRole = () => {
+    if (!this.props.user) {
+      return 'guest';
+    }
+    return this.props.user.role;
+  };
+
   render() {
     return (
       <div>
@@ -37,7 +44,7 @@ class DrugstoresList extends Component {
                 <DrugstoreItem
                   key={item._id}
                   item={item}
-                  userRole={this.props.userRole}
+                  userRole={this.getUserRole()}
                   delDrugstore={this.props.delDrugstore}
                 />
               ))}
@@ -54,15 +61,13 @@ DrugstoresList.propTypes = {
   delDrugstore: PropTypes.func.isRequired,
   drugstores: PropTypes.array,
   isLoading: PropTypes.bool,
-  error: PropTypes.string,
-  userRole: PropTypes.string
+  error: PropTypes.string
 };
 
 DrugstoresList.defaultProps = {
   drugstores: [],
   isLoading: false,
-  error: '',
-  userRole: 'user'
+  error: ''
 };
 
 const mapStateToProps = state => {
@@ -70,10 +75,11 @@ const mapStateToProps = state => {
     drugstores: state.drugstoresStore.drugstores,
     isLoading: state.drugstoresStore.isLoading,
     error: state.drugstoresStore.error,
-    userRole: state.auth.user.role
+    user: state.auth.user
   };
 };
 
-export default connect(mapStateToProps, { getDrugstores, delDrugstore })(
-  DrugstoresList
-);
+export default connect(
+  mapStateToProps,
+  { getDrugstores, delDrugstore }
+)(DrugstoresList);

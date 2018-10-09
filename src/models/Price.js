@@ -16,6 +16,7 @@ const docSchema = new Schema({
       expiration_date: Date,
       producer: String,
       count: Number,
+      countStr: String,
       price: Number
     }
   ],
@@ -25,6 +26,7 @@ const docSchema = new Schema({
     drugstore_uid: { type: String, index: true }
   },
   count: Number,
+  countStr: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
