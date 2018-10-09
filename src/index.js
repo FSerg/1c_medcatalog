@@ -1,4 +1,4 @@
-// import "babel-polyfill";
+import 'babel-polyfill';
 import * as path from 'path';
 import express from 'express';
 import mongoose from 'mongoose';
