@@ -10,6 +10,7 @@ import SignupPage from './authentication/SignupPage';
 import Config from './Config';
 
 import NavigationBar from './navbar/NavigationBar';
+import NavigationBarMobile from './navbar/NavigationBarMobile';
 import Landing from './Landing';
 import Discounts from './discounts/Discounts';
 import PricePage from './price/PricePage';
@@ -19,7 +20,27 @@ import Page from './Page';
 import ModalRootContainer from './modal/ModalRootContainer';
 
 class App extends Component {
+  state = {
+    width: window.innerWidth
+  };
+
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
+
   render() {
+    const { width } = this.state;
+    const isMobile = width <= 768;
+    const contStyle = !isMobile ? { marginTop: '6em' } : { marginTop: '1em' };
+
     return (
       <div>
         <YMInitializer
@@ -34,9 +55,9 @@ class App extends Component {
           }}
         />
         <ModalRootContainer />
-        <NavigationBar />
+        {isMobile ? <NavigationBarMobile /> : <NavigationBar />}
 
-        <Container style={{ marginTop: '5em' }}>
+        <Container style={contStyle}>
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route path="/login" component={LoginPage} />

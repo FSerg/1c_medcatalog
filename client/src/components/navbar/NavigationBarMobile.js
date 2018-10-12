@@ -2,51 +2,46 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  Container,
-  Statistic,
-  Menu,
-  Label,
-  Button,
-  Icon
-} from 'semantic-ui-react';
+import { Container, Menu, Label, Button, Icon } from 'semantic-ui-react';
 
 import { signoutUser } from '../../actions/authActions';
 import UserMenu from './UserMenu';
 
-class NavigationBar extends Component {
+class NavigationBarMobile extends Component {
   render() {
     const { authenticated } = this.props;
     return (
-      <Menu fixed="top">
+      <Menu stackable>
         <Container>
-          <Statistic
+          <Label
             as={NavLink}
             exact
             to="/"
-            size="tiny"
-            color="grey"
-            style={{ paddingLeft: '10px', paddingRight: '10px' }}
+            size="big"
+            style={{
+              marginLeft: '5px',
+              marginTop: '5px',
+              marginBottom: '5px'
+            }}
           >
-            <Statistic.Label>Аптеки Альфа</Statistic.Label>
-            <Statistic.Value>8 (86133) 49-333</Statistic.Value>
-          </Statistic>
+            Аптеки Альфа <Icon style={{ paddingLeft: '10px' }} name="phone" />8
+            (86133) 49-333
+          </Label>
+
           <Menu.Item as={NavLink} to="/price">
             <Button primary>Поиск по каталогу</Button>
           </Menu.Item>
           <Menu.Item as={NavLink} to="/drugstores">
-            Адреса <br />
-            аптек
+            Адреса аптек
           </Menu.Item>
           <Menu.Item as={NavLink} exact to="/discounts">
-            Бонусная <br />
-            программа
+            Бонусная программа
           </Menu.Item>
+
           {!authenticated ? (
             <Menu.Menu position="right">
               <Menu.Item as={NavLink} to="/login">
-                Вход в<br />
-                систему
+                Вход в систему
               </Menu.Item>
               <Menu.Item as={NavLink} to="/signup">
                 Регистрация
@@ -64,12 +59,12 @@ class NavigationBar extends Component {
   }
 }
 
-NavigationBar.propTypes = {
+NavigationBarMobile.propTypes = {
   signoutUser: PropTypes.func.isRequired,
   authenticated: PropTypes.bool
 };
 
-NavigationBar.defaultProps = {
+NavigationBarMobile.defaultProps = {
   authenticated: false
 };
 
@@ -84,5 +79,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     { signoutUser }
-  )(NavigationBar)
+  )(NavigationBarMobile)
 );

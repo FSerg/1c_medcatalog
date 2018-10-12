@@ -2,7 +2,6 @@ module.exports = {
   port: process.env.PORT || 5002,
   jwtSecret: process.env.JWT_SECRET,
   token: process.env.TOKEN,
-  tokenPrices: process.env.TOKEN_PRICES,
   mongoURI: process.env.MONGO_URI,
   resultsCounts: process.env.RESULTS_COUNTS || 20,
   urlLetter: process.env.URL_LETTER,
