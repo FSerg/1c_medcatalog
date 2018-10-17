@@ -15,7 +15,7 @@ import {
 import { signoutUser } from '../../actions/authActions';
 import UserMenu from './UserMenu';
 
-const trigger = <Icon style={{ paddingLeft: '10px' }} name="bars" size="big" />;
+const trigger = <Icon style={{ paddingLeft: '5px' }} name="bars" size="big" />;
 
 class NavigationBarMobile extends Component {
   render() {
@@ -25,9 +25,9 @@ class NavigationBarMobile extends Component {
         <Container>
           <Menu.Item as={NavLink} exact to="/">
             <Statistic
-              size="tiny"
+              size="mini"
               color="grey"
-              style={{ paddingLeft: '10px', paddingRight: '10px' }}
+              style={{ paddingLeft: '5px', paddingRight: '5px' }}
             >
               <Statistic.Label>Аптеки Альфа</Statistic.Label>
               <Statistic.Value>8 (86133) 49-333</Statistic.Value>
