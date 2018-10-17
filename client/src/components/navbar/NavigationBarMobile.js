@@ -2,57 +2,70 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Container, Menu, Label, Button, Icon } from 'semantic-ui-react';
+import {
+  Container,
+  Menu,
+  Label,
+  Button,
+  Icon,
+  Statistic,
+  Dropdown
+} from 'semantic-ui-react';
 
 import { signoutUser } from '../../actions/authActions';
 import UserMenu from './UserMenu';
+
+const trigger = <Icon style={{ paddingLeft: '10px' }} name="bars" size="big" />;
 
 class NavigationBarMobile extends Component {
   render() {
     const { authenticated } = this.props;
     return (
-      <Menu stackable>
+      <Menu>
         <Container>
-          <Label
-            as={NavLink}
-            exact
-            to="/"
-            size="big"
-            style={{
-              marginLeft: '5px',
-              marginTop: '5px',
-              marginBottom: '5px'
-            }}
-          >
-            Аптеки Альфа <Icon style={{ paddingLeft: '10px' }} name="phone" />8
-            (86133) 49-333
-          </Label>
+          <Menu.Item as={NavLink} exact to="/">
+            <Statistic
+              size="tiny"
+              color="grey"
+              style={{ paddingLeft: '10px', paddingRight: '10px' }}
+            >
+              <Statistic.Label>Аптеки Альфа</Statistic.Label>
+              <Statistic.Value>8 (86133) 49-333</Statistic.Value>
+            </Statistic>
+          </Menu.Item>
 
           <Menu.Item as={NavLink} to="/price">
             <Button primary>Поиск по каталогу</Button>
           </Menu.Item>
-          <Menu.Item as={NavLink} to="/drugstores">
-            Адреса аптек
-          </Menu.Item>
-          <Menu.Item as={NavLink} exact to="/discounts">
-            Бонусная программа
-          </Menu.Item>
 
-          {!authenticated ? (
-            <Menu.Menu position="right">
-              <Menu.Item as={NavLink} to="/login">
-                Вход в систему
-              </Menu.Item>
-              <Menu.Item as={NavLink} to="/signup">
-                Регистрация
-              </Menu.Item>
-            </Menu.Menu>
-          ) : (
-            <UserMenu
-              user={this.props.user}
-              signoutUser={this.props.signoutUser}
-            />
-          )}
+          <Menu.Menu position="right">
+            <Dropdown trigger={trigger} item simple>
+              <Dropdown.Menu>
+                <Dropdown.Item as={NavLink} to="/drugstores">
+                  Адреса аптек
+                </Dropdown.Item>
+                <Dropdown.Item as={NavLink} to="/discounts">
+                  Бонусная программа
+                </Dropdown.Item>
+
+                {!authenticated
+                  ? [
+                    <Dropdown.Item as={NavLink} to="/login">
+                        Вход всистему
+                    </Dropdown.Item>,
+                    <Dropdown.Item as={NavLink} to="/signup">
+                        Регистрация
+                    </Dropdown.Item>
+                  ]
+                  : [
+                    <Dropdown.Item as={NavLink} to="/profile">
+                        Профиль
+                    </Dropdown.Item>,
+                    <Dropdown.Item onClick={signoutUser}>Выход</Dropdown.Item>
+                  ]}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Menu>
         </Container>
       </Menu>
     );
