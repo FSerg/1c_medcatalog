@@ -35,7 +35,7 @@ class NavigationBarMobile extends Component {
           </Menu.Item>
 
           <Menu.Item as={NavLink} to="/price">
-            <Button primary>Поиск по каталогу</Button>
+            <Button primary>Поиск</Button>
           </Menu.Item>
 
           <Menu.Menu position="right">
