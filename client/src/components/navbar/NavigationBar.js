@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { NavLink, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { NavLink, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import {
   Container,
   Statistic,
   Menu,
   Label,
   Button,
-  Icon
-} from 'semantic-ui-react';
+  Icon,
+} from "semantic-ui-react";
 
-import { signoutUser } from '../../actions/authActions';
-import UserMenu from './UserMenu';
+import { signoutUser } from "../../actions/authActions";
+import UserMenu from "./UserMenu";
 
 class NavigationBar extends Component {
   render() {
@@ -26,10 +26,10 @@ class NavigationBar extends Component {
             to="/"
             size="tiny"
             color="grey"
-            style={{ paddingLeft: '10px', paddingRight: '10px' }}
+            style={{ paddingLeft: "10px", paddingRight: "10px" }}
           >
             <Statistic.Label>Аптеки Альфа</Statistic.Label>
-            <Statistic.Value>8 (86133) 49-333</Statistic.Value>
+            <Statistic.Value>+7-918-6401077</Statistic.Value>
           </Statistic>
           <Menu.Item as={NavLink} to="/price">
             <Button primary>Поиск по каталогу</Button>
@@ -38,10 +38,10 @@ class NavigationBar extends Component {
             Адреса <br />
             аптек
           </Menu.Item>
-          <Menu.Item as={NavLink} exact to="/discounts">
+          {/* <Menu.Item as={NavLink} exact to="/discounts">
             Бонусная <br />
             программа
-          </Menu.Item>
+          </Menu.Item> */}
           {!authenticated ? (
             <Menu.Menu position="right">
               <Menu.Item as={NavLink} to="/login">
@@ -66,23 +66,20 @@ class NavigationBar extends Component {
 
 NavigationBar.propTypes = {
   signoutUser: PropTypes.func.isRequired,
-  authenticated: PropTypes.bool
+  authenticated: PropTypes.bool,
 };
 
 NavigationBar.defaultProps = {
-  authenticated: false
+  authenticated: false,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     authenticated: state.auth.authenticated,
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    { signoutUser }
-  )(NavigationBar)
+  connect(mapStateToProps, { signoutUser })(NavigationBar)
 );
