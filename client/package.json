@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:5001",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "history": "^4.7.2",
     "javascript-time-ago": "^1.0.28",
     "lodash": "^4.17.5",
